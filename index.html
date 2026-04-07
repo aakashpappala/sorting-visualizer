@@ -7,78 +7,105 @@
     <title>Sorting Algorithm Visualizer</title>
 </head>
 <body>
-    <div class="nav-container"></div>
-        <h2 onclick="window.location.reload()" class="title">Sorting Algorithm Visualizer</h2>
+
+    <div class="nav-container">
+        <h2 onclick="window.location.reload()" class="title">
+            Sorting Algorithm Visualizer
+        </h2>
+
         <div class="navbar">
-           
+
+            <!-- Algorithm -->
             <span class="options">
-                <select name="select sort algorithm" id="menu" class="algo-menu">
-                    <option value="0">Select Algoritm</option>
+                <select class="algo-menu" data-testid="algorithm">
+                    <option value="0">Select Algorithm</option>
                     <option value="1">Bubble Sort</option>
                     <option value="2">Selection Sort</option>
                     <option value="3">Insertion Sort</option>
                     <option value="4">Merge Sort</option>
                     <option value="5">Quick Sort</option>
                 </select>
-
             </span>
+
+            <!-- Size -->
             <span class="options">
-                <select name="select array size" id="menu" class="size-menu">
-                 <option value="0">Select Size</option>
-                 <option value="5">5</option>
-                 <option value="10">10</option>
-                 <option value="15">15</option>
-                 <option value="20">20</option>
-                 <option value="25">25</option>
-                 <option value="30">30</option>
-                 <option value="40">40</option>
+                <select class="size-menu" data-testid="size">
+                    <option value="0">Select Size</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
                 </select>
-
             </span>
-            <span class="options"></span>
-                <select name="select speed" id="speedmenu" class="speed-menu">
-                 <option value="0">Select Speed</option>
-                 <option value="0.5">0.5x</option>
-                 <option value="0.75">0.75x</option>
-                 <option value="1">1x</option>
-                 <option value="1.25">1.25x</option>
-                 <option value="1.5">1.5x</option>
-                 <option value="2">2x</option>
-                 <option value="3">3x</option>
+
+            <!-- Speed -->
+            <span class="options">
+                <select class="speed-menu" data-testid="speed">
+                    <option value="0">Select Speed</option>
+                    <option value="0.5">0.5x</option>
+                    <option value="0.75">0.75x</option>
+                    <option value="1">1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
                 </select>
-
             </span>
-            <a onclick="genarate()" id="random">Genarate Array</a>
-            <button class="start">Sort</button>
+
+            <!-- Generate -->
+            <button onclick="genarate()" id="random" data-testid="generate-btn">
+                Generate Array
+            </button>
+
+            <!-- Start -->
+            <button class="start" data-testid="start-btn">
+                Sort
+            </button>
+
         </div>
+
+        <!-- Status Text 🔥 -->
+        <p id="status" data-testid="status-text">Ready</p>
+
     </div>
+
     <br/>
-  <div class="container">
-    <div class="center">
-        <div class="array">
 
+    <div class="container">
+        <div class="center">
+            <div class="array" data-testid="array-container">
+                <!-- Bars will be generated here -->
+            </div>
+        </div>
+
+        <div class="legend">
+            <div><div class="green"></div><p>Sorted</p></div>
+            <div><div class="black"></div><p>Compare</p></div>
+            <div><div class="pink"></div><p>Selected</p></div>
         </div>
     </div>
-    <div class="legend">
-        <div><div class="green"></div><p>Sorted</p></div>
-        <div><div class="black"></div><p>Compare</p></div>
-        <div><div class="pink"></div><p>Selected</p></div>
-    </div>
-  </div>
+
     <footer class="footer">
-        <p>Time Complexity = <span id="time"></span> and Total Time Taken = <span id="ttime"></span> seconds</p>
+        <p>
+            Time Complexity = <span id="time"></span> 
+            and Total Time Taken = <span id="ttime"></span> seconds
+        </p>
     </footer>
+
     <div class="footer-personal">
         <div class="social">
-
             <a href="mailto:aakashpappala@gmail.com">Gmail</a>
             <a href="https://www.linkedin.com/in/aakashpappala/" target="_blank">LinkedIn</a>
             <a href="https://github.com/aakashpappala" target="_blank">GitHub</a>
         </div>
-
+    </div>
 
     <script src="scripts/app.js"></script>
     <script src="scripts/helper.js"></script>
     <script src="scripts/algorithm.js"></script>
+
 </body>
 </html>
