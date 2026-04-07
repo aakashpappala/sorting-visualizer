@@ -1,83 +1,125 @@
-"use strict"
+"use strict";
 
+// ================= COMMON ELEMENTS =================
+const arrayContainer = document.querySelector("[data-testid='array-container']");
+const statusText = document.querySelector("[data-testid='status-text']");
+const startBtn = document.querySelector("[data-testid='start-btn']");
+
+// ================= CLEAR SCREEN =================
 const clearScreen = async () => {
-    document.querySelector(".array").innerHTML = "";
-  };
-const randomList=async(Length)=>{
-    let arr=new Array()
-    let upperBound=1;
-    let lowerBound=100;
-    for (let counter = 0; counter < Length; ++counter) {
+    arrayContainer.innerHTML = "";
+};
+
+// ================= RANDOM ARRAY =================
+const randomList = async (length) => {
+    let arr = [];
+    let upperBound = 100;
+    let lowerBound = 1;
+
+    for (let i = 0; i < length; i++) {
         let randomNumber = Math.floor(
-          Math.random() * (upperBound - lowerBound + 1) + lowerBound
+            Math.random() * (upperBound - lowerBound + 1) + lowerBound
         );
-        arr.push(parseInt(randomNumber));
-      }
-      return arr;
-}
-const RenderList=async()=>{
-    let sizeValue = Number(document.querySelector(".size-menu").value);
-    await clearScreen()
-    let list = await randomList(sizeValue)
-    // console.log(list)
-    const arrayNode = document.querySelector(".array");
+        arr.push(randomNumber);
+    }
+    return arr;
+};
+
+// ================= RENDER LIST =================
+const RenderList = async () => {
+    let sizeValue = Number(document.querySelector("[data-testid='size']").value);
+
+    await clearScreen();
+
+    let list = await randomList(sizeValue);
+
     for (const element of list) {
         const node = document.createElement("div");
+
         node.className = "cell";
-        node.setAttribute("value", String(element));
+        node.setAttribute("data-testid", "bar");   // 🔥 automation
+        node.setAttribute("value", element);       // 🔥 validation
+
         node.style.height = `${3.8 * element}px`;
-        arrayNode.appendChild(node);
-      }
-}
+
+        arrayContainer.appendChild(node);
+    }
+};
+
+// ================= SCREEN RENDER =================
 const RenderScreen = async () => {
-    let algoValue = Number(document.querySelector(".algo-menu").value);
     await RenderList();
-  };
+};
 
-const start=async()=>{
+// ================= START SORT =================
+const start = async () => {
+
     document.querySelector(".footer > p:nth-child(1)").style.visibility = "hidden";
-    let now = new Date();
-    let algoValue = Number(document.querySelector(".algo-menu").value);
-    let speedValue = Number(document.querySelector(".speed-menu").value);
-    let sizearr=Number(document.querySelector(".size-menu").value)
-  console.log(algoValue)
-  console.log(speedValue)
-    if (speedValue === 0) {
-      speedValue = 1;
-    }
-    if (algoValue === 0) {
-        console.log("error")
-      alert("No Algorithm Selected");
-      return;
-    }
-    if (sizearr === 0) {
-        console.log("error")
-      alert("No size Selected");
-      return;
-    }
-    let algorithm = new Algorithms(speedValue);
-    document.querySelector(".start").innerHTML = "Sorting";
-    if (algoValue === 1) await algorithm.BubbleSort();
-    if (algoValue === 2) await algorithm.SelectionSort();
-    if (algoValue === 3) await algorithm.InsertionSort();
-    if (algoValue === 4) await algorithm.MergeSort();
-    if (algoValue === 5) await algorithm.QuickSort();
-    document.querySelector(".start").innerHTML = "Sort";
-    let now1 = new Date();
-    // document.getElementById('Ttime').innerHTML = (now1 - now) / 1000;
-}
-const genarate=async()=>{
-    let sizearr=Number(document.querySelector(".size-menu").value)
-    if (sizearr === 0) {
-        console.log("error")
-      alert("No size Selected");
-      return;
-    }
-    await RenderList()
-}
 
-// document.querySelector(".icon").addEventListener("click", response);
-document.querySelector(".start").addEventListener("click", start);
-document.querySelector(".size-menu").addEventListener("change", RenderList);
-document.querySelector(".algo-menu").addEventListener("change", RenderScreen);
-window.onload = RenderScreen;
+    let algoValue = Number(document.querySelector("[data-testid='algorithm']").value);
+    let speedValue = Number(document.querySelector("[data-testid='speed']").value);
+    let sizeValue = Number(document.querySelector("[data-testid='size']").value);
+
+    // VALIDATION
+    if (algoValue === 0) {
+        alert("Select Algorithm");
+        return;
+    }
+
+    if (sizeValue === 0) {
+        alert("Select Size");
+        return;
+    }
+
+    if (speedValue === 0) speedValue = 1;
+
+    // UI STATE
+    statusText.innerText = "Sorting...";
+    startBtn.disabled = true;
+    startBtn.innerText = "Sorting...";
+
+    try {
+        let algorithm = new Algorithms(speedValue);
+
+        if (algoValue === 1) await algorithm.BubbleSort();
+        if (algoValue === 2) await algorithm.SelectionSort();
+        if (algoValue === 3) await algorithm.InsertionSort();
+        if (algoValue === 4) await algorithm.MergeSort();
+        if (algoValue === 5) await algorithm.QuickSort();
+
+        statusText.innerText = "Sorting Completed";
+    } catch (error) {
+        console.error(error);
+        statusText.innerText = "Error occurred";
+    }
+
+    // RESET BUTTON
+    startBtn.disabled = false;
+    startBtn.innerText = "Sort";
+};
+
+// ================= GENERATE =================
+const generate = async () => {
+    let sizeValue = Number(document.querySelector("[data-testid='size']").value);
+
+    if (sizeValue === 0) {
+        alert("Select Size");
+        return;
+    }
+
+    statusText.innerText = "Generating Array...";
+    await RenderList();
+    statusText.innerText = "Ready";
+};
+
+// ================= EVENTS =================
+startBtn.addEventListener("click", start);
+document.querySelector("[data-testid='size']").addEventListener("change", RenderList);
+document.querySelector("[data-testid='algorithm']").addEventListener("change", RenderScreen);
+document.querySelector("[data-testid='generate-btn']").addEventListener("click", generate);
+
+// ================= INIT =================
+window.onload = () => {
+    statusText.innerText = "Ready";
+    RenderScreen();
+};
