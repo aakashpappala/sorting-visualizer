@@ -1,51 +1,250 @@
-/* ===============================
-   AUTOMATION + STATE IMPROVEMENTS
-================================ */
-
-/* Status Text */
-#status {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #333;
+:root{
+    --primary-color:#a8a0a0;
+    --secondary-color:#101010
 }
 
-/* Button Disabled State */
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  color: #666;
+*{
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
 }
-
-/* Smooth transitions for bars */
-.cell {
-  transition: all 0.3s ease-in-out;
+body{
+position: relative;
+min-height: 100vh;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: stretch;
 }
-
-/* Improve visibility for states */
+.title{
+    background-color: var(--primary-color);
+    text-align: center;
+    font-size: 2rem;
+    padding-block: 0.5rem;
+    color:#fff;
+    cursor: pointer;
+}
+.navbar
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-size: 18px;
+    min-height: 80px;
+    padding-block: 0.6rem;
+    background-color: var(--primary-color);
+    transition: all 0.5s cubic-bezier(0.645,0.045,0.355,1);
+}
+.navbar a{
+   cursor: pointer;
+   color: var(--secondary-color);
+   font-weight: bold;
+   padding: 0.4rem 2rem;
+   border-radius: 6px;
+   transition:all 0.3s ;
+   background: white;
+   border: 1px solid white;
+}
+.navbar a:hover
+{
+    background-color:var(--secondary-color);
+    color:white
+}
+.navbar #menu
+{
+    width: fit-content;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 8px;
+    background-color: #070707;
+    color: white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+}
+.navbar #speedmenu
+{
+    width: fit-content;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 8px;
+    background-color: #070707;
+    color: white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+}
+#menu,#speedmenu,#random,#start
+{
+    cursor: pointer;
+}
+.container
+{
+    width: 100vw;
+    position: relative;
+    height: fit-content;
+}
+.center
+{
+    margin: 0 auto;
+    box-shadow: rgba(249, 5, 5, 0.16) 0px 1px 4px;
+    height: 420px;
+    width: 410px;
+    max-height: 700px;
+}
+.array
+{
+    display: flex;
+    align-items: flex-end;
+    min-height: 100%;
+    height: 100%;
+    padding: 1rem;
+    flex-direction: row;
+    background:#ede6ea;
+}
+.start
+{
+    padding: 0.5rem 2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid white;
+}
+.start:hover{
+    background: var(--secondary-color);
+    color: white;
+}
+.cell
+{
+    display: flex;
+    align-items: flex-end;
+    flex: 0.5;
+    width: 0.000001%;
+    margin: 1px;
+    background-color: #bbb5b5;
+    resize: horizontal;
+    position: relative;
+    transition: all 0.4s ease-in;
+}
 .cell.done {
-  background-color: #4caf50 !important; /* green */
-}
+    background-color: #9cec5b;
+    border-color: #9cec5b;
+    color: white;
+    transition: all 0.4s ease-out;
+  }
+  .cell.visited {
+    border-color: #6184d8;
+    background-color: #6184d8;
+    color: white;
+    transition: 0.5s;
+  }
+  .cell.current {
+    border-color: #060606;
+    background-color: #050505;
+    color: white;
+    transition: all 0.4s ease-out;
+  }
+  .cell.min {
+    background-color: #ff1493;
+    border-color: #ff1493;
+    color: white;
+    transition: all 0.4s ease-out;
+  }
+  footer {
+    text-align: center;
+    font-size: 18px;
+    color: #2c3e50;
+    padding: 1.6em;
+    font-weight: 700;
+  }
+  .footer > p:nth-child(1) {
+    margin-bottom: 0.6em;
+    visibility: hidden;
+  }
+  #time ,
+  #Ttime
+  {
+    font-weight: bold;
+  }
+  .link {
+    text-decoration: none;
+    font-weight: bold;
+    color: #ff5252;
+    font-size: 20px;
+  }
+  .footer-personal  {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.5rem 0%;
+    background:var(--primary-color);
+    color: white;
+    height: auto;
+  }
+  .social{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+  }
+  .footerr .social a{
+    font-size: 1.6rem;
+    margin: 0rem 1rem 0rem 0rem;
+    background-color: white;
+    color : black;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: .15rem solid var(--secondary-color);
+    border-radius: 50%;
+    transition: all 1s ease-in-out;
+  }
+  
+  .social a:hover{
+    color: white;
+  }
 
-.cell.visited {
-  background-color: #2196f3 !important; /* blue */
-}
-
-.cell.current {
-  background-color: #000 !important; /* black */
-}
-
-.cell.min {
-  background-color: #ff4081 !important; /* pink */
-}
-
-/* Hover effect for buttons */
-button:hover:not(:disabled) {
-  transform: scale(1.05);
-}
-
-/* Improve legend visibility */
-.legend div {
-  font-size: 14px;
-  font-weight: 500;
-}
+  .legend
+  {
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+align-items: flex-start;
+  }
+  .legend>div
+  {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+  .black
+  {
+    height: 0.8rem;
+    width: 0.8rem;
+    background-color: black;
+  }
+  .green
+  {
+    height: 0.8rem;
+    width: 0.8rem;
+    background-color: rgb(100, 199, 100);
+  }
+  .pink
+  {
+    height: 0.8rem;
+    width: 0.8rem;
+    background-color:pink;
+  }
+  @media screen and (max-width: 600px) {
+    .legend
+    {
+        right: 0;
+    }
+  }
